@@ -37,8 +37,8 @@ useradd -d /home/cowrie -s /bin/bash -m cowrie -g users
 cd /opt
 git clone https://github.com/micheloosterhof/cowrie.git cowrie
 cd cowrie
-virtualenv env
-source env/bin/activate
+virtualenv cowrie-env
+source cowrie-env/bin/activate
 # without the following, i get this error:
 # Could not find a version that satisfies the requirement csirtgsdk (from -r requirements.txt (line 10)) (from versions: 0.0.0a5, 0.0.0a6, 0.0.0a5.linux-x86_64, 0.0.0a6.linux-x86_64, 0.0.0a3)
 pip install csirtgsdk==0.0.0a6
@@ -46,7 +46,7 @@ pip install -r requirements.txt
 
 cp cowrie.cfg.dist cowrie.cfg
 sed -i 's/hostname = svr04/hostname = server/g' cowrie.cfg
-sed -i 's/#listen_port = 2222/listen_port = 22/g' cowrie.cfg
+sed -i 's/#listen_port = 2222/listen_port = 2222/g' cowrie.cfg
 sed -i 's/ssh_version_string = SSH-2.0-OpenSSH_6.0p1 Debian-4+deb7u2/ssh_version_string = SSH-2.0-OpenSSH_6.7p1 Ubuntu-5ubuntu1.3/g' cowrie.cfg
 sed -i 's/#\[output_hpfeeds\]/[output_hpfeeds]/g' cowrie.cfg
 sed -i "s/#server = hpfeeds.mysite.org/server = $HPF_HOST/g" cowrie.cfg
