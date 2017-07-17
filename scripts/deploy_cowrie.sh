@@ -39,6 +39,8 @@ git clone https://github.com/micheloosterhof/cowrie.git cowrie
 cd cowrie
 virtualenv cowrie-env
 source cowrie-env/bin/activate
+cd data
+ssh-keygen -t rsa -b 2048 -f ssh_host_rsa_key
 # without the following, i get this error:
 # Could not find a version that satisfies the requirement csirtgsdk (from -r requirements.txt (line 10)) (from versions: 0.0.0a5, 0.0.0a6, 0.0.0a5.linux-x86_64, 0.0.0a6.linux-x86_64, 0.0.0a3)
 pip install csirtgsdk==0.0.0a6
@@ -60,13 +62,13 @@ touch /etc/authbind/byport/22
 chown cowrie /etc/authbind/byport/22
 chmod 770 /etc/authbind/byport/22
 
-sed -i 's/AUTHBIND_ENABLED=no/AUTHBIND_ENABLED=yes/' start.sh
-sed -i 's/DAEMONIZE=""/DAEMONIZE="-n"/' start.sh
+sed -i 's/AUTHBIND_ENABLED=no/AUTHBIND_ENABLED=yes/' bin/cowrie
+sed -i 's/DAEMONIZE=""/DAEMONIZE="-n"/' bin/cowrie
 
 # Config for supervisor
 cat > /etc/supervisor/conf.d/cowrie.conf <<EOF
 [program:cowrie]
-command=/opt/cowrie/start.sh env
+command=/opt/cowrie/bin/cowrie start
 directory=/opt/cowrie
 stdout_logfile=/opt/cowrie/log/cowrie.out
 stderr_logfile=/opt/cowrie/log/cowrie.err
