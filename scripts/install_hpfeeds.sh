@@ -65,7 +65,7 @@ $VIRTUALENV -p $PYTHON env
 . env/bin/activate
 
 pip install cffi
-pip install pyopenssl==16.0
+pip install pyopenssl
 pip install pymongo
 pip install -e git+https://github.com/rep/evnet.git#egg=evnet-dev
 pip install .
